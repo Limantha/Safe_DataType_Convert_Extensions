@@ -89,7 +89,7 @@ namespace SafeExtensions.DataAccess
                             {
                                 UserId = Convert.ToInt32(reader["UserId"]),
                                 Username = Convert.ToString(reader["UserName"]),
-                                NoOfSubjects = Convert.ToInt32(reader["NoOfSubjects"]),
+                                NoOfSubjects = reader["NoOfSubjects"].ToIntSafe(1),
                                 Scores = new List<Score>()
                             };
                         }
