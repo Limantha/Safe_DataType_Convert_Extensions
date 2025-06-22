@@ -28,9 +28,9 @@ namespace SafeExtensions.DataAccess
         {
             return dbValue == DBNull.Value || dbValue == null ? defaultValue : Convert.ToString(dbValue, CultureInfo.InvariantCulture);
         }
-        public static DateTime? ToDateTimeSafe(this object dbValue)
+        public static DateTime ToDateTimeSafe(this object dbValue)
         {
-            DateTime defaultDatetime = DateTime.Parse("1000-01-01");
+            DateTime defaultDatetime = DateTime.Parse("1753-01-01");
             if (dbValue == DBNull.Value || dbValue == null)
                 return defaultDatetime;
             return Convert.ToDateTime(dbValue, CultureInfo.InvariantCulture);
@@ -42,5 +42,18 @@ namespace SafeExtensions.DataAccess
                 return defaultValue;
             return Convert.ToBoolean(dbValue, CultureInfo.InvariantCulture);
         }
+
+
+        ////another simply way of handling dbnull 
+        //public static class DataReaderExtensions
+        //{
+        //    public static T GetValueOrDefault<T>(this IDataReader reader, string columnName, T defaultValue = default)
+        //    {
+        //        return reader[columnName] == DBNull.Value ? defaultValue : (T)reader[columnName];
+        //    }
+        //}
+
+        ////application 
+        ////var DOB = reader.GetValueOrDefault<DateTime>("DOB", 0);
     }
 }
