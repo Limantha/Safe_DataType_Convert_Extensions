@@ -87,12 +87,28 @@ namespace SafeExtensions.DataAccess
                         {
                             user = new User
                             {
+
+                                //1. Check for DBNull before accessing the value (ADO.NET)
+                                //DOB = reader["DOB"]==DBNull.Value? DateTime.Parse("1000-01-01"): Convert.ToDateTime(reader["DOB"]),
+
+                                //2. Use Null-Coalescing Operator (??)
+                                //Username = reader["UserName"] as string ?? "N/A",
+
+                                //3. Convert using Convert methods
+                                //Username = Convert.IsDBNull(reader["UserName"])?"N/A":Convert.ToString(reader["UserName"]),
+
+                                //4. Use Nullable Types for Value Types
+                                //DOB = Convert.IsDBNull(reader["DOB"])? (DateTime?) null : Convert.ToDateTime(reader["DOB"]),
+
+
                                 UserId = Convert.ToInt32(reader["UserId"]),
-                                Username = Convert.ToString(reader["UserName"]),
-                                NoOfSubjects = reader["NoOfSubjects"].ToIntSafe(1),
+                                Username = reader["UserName"].ToStringSafe(),
+                                DOB = reader["DOB"].ToDateTimeSafe(),
+                                NoOfSubjects = reader["NoOfSubjects"].ToIntSafe(),
                                 Scores = new List<Score>()
                             };
                         }
+
 
                         if (reader.NextResult())
                         {

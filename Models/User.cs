@@ -10,6 +10,7 @@ namespace SafeExtensions.Models
         public int UserId { get; set; }
         public string Username { get; set; }
         public int? NoOfSubjects { get; set; }
+        public DateTime DOB { get; set; }
         public ICollection<Score> Scores { get; set; }
         public double Average {
             get
